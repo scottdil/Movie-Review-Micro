@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie API Test</title>
+    <link rel="stylesheet" href="main.css" />
+</head>
+<body>
+    <form id="movie-search">
+        <label>Title</label> <input type="text" name="title" id="title">
+        <label>Year</label> <input type="number" name="year" id="year">
+        <input type="submit">
+    </form>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="js/movieSearch.js"></script>
+
+    <table id = "display-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Director</th>
+                <th>Synopsis</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="title"></td>
+                <td id="year"></td>
+                <td id="director"></td>
+                <td id="plot"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button">Click to add movie!</button>
+    <script src="js/movieAdd.js"></script>
+
+</body>
+</html>

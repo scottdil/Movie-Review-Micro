@@ -1,0 +1,50 @@
+
+
+<h2>Movie Search:</h2>
+
+<div class="button-container">
+    <button onclick="sendToHomePage()">Back to Home Page</button>
+</div>
+<script>
+    function sendToHomePage(){
+        let url = `/landing_page`;
+        window.location.href = url;
+    }
+</script>
+
+
+<form id="movie-search">
+    <p>To search for a movie enter the title and year. Then hit submit</p>
+    <label>Title</label> <input type="text" name="title" id="title">
+    <label>Year</label> <input type="number" name="year" id="year">
+    <input type="submit">
+</form>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="./js/movieSearch.js"></script>
+
+<form class="search-form" id="display-form">
+    <img id="movie-poster" width="270" height="400">
+    <label for="input-title">Movie Title: </label>
+    <input type="text" name="title" id="input-title" required>
+
+    <label for="input-year">Year Released: </label>
+    <input type="number" name="input-year" id="input-year" required>
+
+    <label for="input-director">Director: </label>
+    <input type="text" name="input-director" id="input-director" required>
+
+    <label for="input-genre">Genre: </label>
+    <input type="text" name="input-genre" id="input-genre" required>
+
+    <label for="input-plot">Synopsis: </label>
+    <textarea rows="4" cols="50" name="input-plot" id="input-plot" required></textarea>
+
+    <label for="input-runtime">Runtime: </label>
+    <input type="text" name="input-runtime" id="input-runtime" required>
+
+<lable>Click to Add movie to your catalog</lable>
+<input type="submit">
+<script src="./js/movieAdd.js"></script>
+</form>
+
+
