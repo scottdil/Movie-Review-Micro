@@ -1,0 +1,59 @@
+<h2>Movie Review Page:</h2>
+
+<div class="button-container">
+    <button onclick="sendToDetailsPage({{data.movie_ID}})">Cancel Review</button>
+</div>
+
+<script>
+    function sendToDetailsPage(movie_ID){
+        let confirmation = confirm("Are you sure you wish to cancel this reivew? All changes will be lost.");
+        if (confirmation == false){
+            return;
+
+        }else{
+        let url = `/movie_details?param1=${movie_ID}`;
+        window.location.href = url;
+        }
+    }
+</script>
+
+<div class="button-table-container">
+    <div class="details-table-container">
+        <table id="movie-details-table" class="details-table">
+            <caption>Movie Details: </caption>
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+            <tr>
+                <th>Title: </th>
+           
+                <td>{{data.Title}}</td>
+           
+            </tr>
+            <tr>
+                <th>Year: </th>
+                <td>{{data.Year}}</td>
+            </tr>
+            <tr>
+                <th>Director: </th>
+                <td>{{data.Director}}</td>
+            </tr>
+            <tr>
+                <th>Synopsis: </th>
+                <td>{{data.Synopsis}}</td>
+            </tr>
+        </table>
+    </div>
+    <div >
+        <form class="display-form" id="review-form">
+            <input type="number" name="ID" id="ID" value="{{data.movie_ID}}" hidden>
+
+            <label for="input-rating">Rating: </label>
+            <input type="number" name="rating" id="input-rating" step="0.01" value="{{data.Rating}}" required>
+
+            <label for="input-review">Review: </label>
+            <textarea rows="500" cols="250" name="review" id="input-review" required>{{data.Review}}</textarea>
+            <input type="submit">
+        </form>
+        <script src="./js/reviewUpdate.js"></script>
+
+    </div>
+</div>

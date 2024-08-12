@@ -1,0 +1,95 @@
+<h2>Stats about your reviews:</h2>
+
+<div class="button-container">    
+    <button onclick="sendToCatalog()">Back to Catalog</button>
+    <button onclick="sendToHomePage()">Back to Home Page</button>
+    <button onClick="sendToSearchPage()">Add a new movie</button>
+</div>
+
+<script>
+    function sendToCatalog(){
+        let url = `/movie_catalog`;
+        window.location.href = url;
+    }
+</script>
+
+<script>
+    function sendToHomePage(){
+        let url = `/landing_page`;
+        window.location.href = url;
+    }
+</script>
+<script>
+    function sendToSearchPage(){
+        let url = `/movie_search`;
+        window.location.href = url;
+    }
+</script>
+<h2>Top Rated Movie</h2>
+<table id="movie-catalog-table">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Year</th>
+            <th>Rating</th>
+            <th>Movie Details</th>
+            <th>Delete Movie</th>
+        </tr>        
+        
+    </thead>
+    <tbody>
+        {{#with (first data)}}
+        <tr data-value={{this.movie_ID}}>
+            <td>{{this.Title}}</td>
+            <td>{{this.Year}}</td>
+            <td>{{this.rating}}</td>
+            <td><button onclick="sendToDetailsPage({{this.movie_ID}})">Details</button></td>
+            <td><button id="deleteButton" onclick="deleteMovie({{this.movie_ID}})">Delete</button></td>
+        </tr>
+        {{/with}}
+    </tbody>
+</table>
+<script src="./js/movieDelete.js"></script>
+
+<h2>Lowest Rated Movie</h2>
+<table id="movie-catalog-table">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Year</th>
+            <th>Rating</th>
+            <th>Movie Details</th>
+            <th>Delete Movie</th>
+        </tr>        
+        
+    </thead>
+    <tbody>
+        {{#each data}}
+            {{#if @index}}
+                {{#if (eq @index 1)}}        
+        <tr data-value={{this.movie_ID}}>
+            <td>{{this.Title}}</td>
+            <td>{{this.Year}}</td>
+            <td>{{this.rating}}</td>
+            <td><button onclick="sendToDetailsPage({{this.movie_ID}})">Details</button></td>
+            <td><button id="deleteButton" onclick="deleteMovie({{this.movie_ID}})">Delete</button></td>
+        </tr>
+                {{/if}}
+            {{/if}}
+        {{/each}}
+    </tbody>
+</table>
+
+<h2>The Average Movie Rating</h2>
+<table id="movie-catalog-table">
+    <td>{{ave}}</td>
+</table>
+
+<script>
+    function sendToDetailsPage(movie_ID){
+        let url = `/movie_details?param1=${movie_ID}`;
+        window.location.href = url;
+    }
+</script>

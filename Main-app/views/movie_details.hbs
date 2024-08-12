@@ -1,0 +1,73 @@
+<h2>Movie Details Page:</h2>
+
+<div class="button-container">
+    <button onclick="history.back()">Go Back</button>
+    <button onclick="sendToReviewPage({{data.movie_ID}})">Edit Review</button>
+    <button onclick="deleteMovieReview({{data.movie_ID}})">Delete Review</button>
+</div>
+<script src="./js/reviewDelete.js"></script>
+<script>
+    function sendToCatalogPage(){
+        let url = `/movie_catalog`;
+        window.location.href = url;
+    }
+</script>
+<script>
+    function sendToReviewPage(movie_ID){
+        let url = `/movie-review?param1=${movie_ID}`;
+        window.location.href = url;
+    }
+</script>
+
+<div class="button-table-container">
+    <div class="details-table-container">
+        <table id="movie-details-table" class="details-table">
+            <caption>Movie Details: </caption>
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+            <tr>
+                <img src="{{data.poster}}" width="270" height="400">
+            </tr>
+            <tr>
+                <th>Title: </th>
+           
+                <td>{{data.Title}}</td>
+           
+            </tr>
+            <tr>
+                <th>Year: </th>
+                <td>{{data.Year}}</td>
+            </tr>
+            <tr>
+                <th>Director: </th>
+                <td>{{data.Director}}</td>
+            </tr>
+            <tr>
+                <th>Synopsis: </th>
+                <td>{{data.Synopsis}}</td>
+            </tr>
+            <tr>
+                <th>Genre: </th>
+                <td>{{data.Genre}}</td>
+            </tr>
+            <tr>
+                <th>Runtime: </th>
+                <td>{{data.Runtime}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="review-table-container">
+        
+        <table id="movie-review-table" class="review-table">
+            <caption>Your Review: </caption>
+            <tr>
+                <th>Rating: </th>
+                <td>{{data.Rating}}</td>
+            </tr>
+            <tr>
+                <th>Review: </th>
+                <td class="scroll">{{{data.Review}}}</td>
+            </tr>
+    
+        </table>
+    </div>
+</div>

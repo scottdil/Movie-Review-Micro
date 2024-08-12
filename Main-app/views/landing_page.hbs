@@ -1,0 +1,37 @@
+
+<h2>Your Home Page:</h2>
+
+    
+<div class="button-container">
+    <p>To add a new movie click the Movie Search button</p>
+    <button onclick="sendToSearchPage()">Movie Search</button>
+    <p>To see your movie catalog click the Movie Catalog button</p>
+    <button onclick="sendToCatalogPage()">Movie Catalog</button>
+    <p>For help and instructions click the Help Page Button</p>
+    <button onclick="sendToHelpPage()">Help Page</button>
+</div>
+
+<script>
+    function sendToSearchPage(){
+        let url = `/movie_search`;
+        window.location.href = url;
+    }
+</script>
+
+<script>
+    function sendToCatalogPage(){
+        let url = `/movie_catalog`;
+        window.location.href = url;
+    }
+</script>
+
+<script>
+    function sendToHelpPage(){
+        let url = `/help_page`;
+        window.location.href = url;
+    }
+</script>
+
+
+
+

@@ -1,0 +1,96 @@
+
+<h2>Your Movie Catolog:</h2>
+
+<div class="button-container">
+     
+    <select id="selectGenre">   
+        <option value="">Select Genre</option>
+        {{#each genre}}
+        <option value="{{this}}">{{this}}</option>
+        {{/each}}
+    </select>
+    <button onclick="sendToStatsPage()">Get Movie Stats</button>
+    <button onclick="sendToTop5Page()">Top 5 Movies</button>
+    <button onclick="sendToHomePage()">Back to Home Page</button>
+    <button onClick="sendToSearchPage()">Add a new movie</button>
+</div>
+
+<script>
+    document.getElementById('selectGenre').addEventListener('change', function(){
+        filterGenre();
+    })
+    function filterGenre(){
+        const genre = document.getElementById('selectGenre').value;
+        if (genre){
+            let url = `/genre_filter?param1=${genre}`;
+            window.location.href = url;
+        }else{
+            alert("You must select a genre");    
+        }
+    }
+</script>
+
+<script>
+    function sendToStatsPage(){
+        let url = `/movie_stats`;
+        window.location.href = url;
+    }
+</script>
+
+<script>
+    function sendToTop5Page(){
+        let url = `/top_five`;
+        window.location.href = url;
+    }
+</script>
+
+<script>
+    function sendToHomePage(){
+        let url = `/landing_page`;
+        window.location.href = url;
+    }
+</script>
+<script>
+    function sendToSearchPage(){
+        let url = `/movie_search`;
+        window.location.href = url;
+    }
+</script>
+
+<table id="movie-catalog-table">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <thead>
+        <tr>
+            {{#each data.[0]}}
+            {{#unless (or (eq @key 'movie_ID') (eq @key 'genre'))}}
+            <th>
+                {{@key}}
+            </th>
+            {{/unless}}
+            {{/each}}
+            <th>Movie Details</th>
+            <th>Delete Movie</th>
+        </tr>
+        
+        
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr data-value={{this.movie_ID}}>
+            <td>{{this.Title}}</td>
+            <td>{{this.Year}}</td>
+            <td>{{this.Rating}}</td>
+            <td><button onclick="sendToDetailsPage({{this.movie_ID}})">Details</button></td>
+            <td><button id="deleteButton" onclick="deleteMovie({{this.movie_ID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/movieDelete.js"></script>
+<script>
+    function sendToDetailsPage(movie_ID){
+        let url = `/movie_details?param1=${movie_ID}`;
+        window.location.href = url;
+    }
+</script>
+
