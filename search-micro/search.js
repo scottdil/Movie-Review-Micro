@@ -8,6 +8,8 @@ port = 4000;
 app.get('/search', function(req, res) {
     const { title, year } = req.query;
 
+    console.log("Received request: ", title, year);
+
     axios.get('http://www.omdbapi.com/', { 
         params: {
             apikey: apiKey,
@@ -16,7 +18,7 @@ app.get('/search', function(req, res) {
         }
      })
     .then(response => {
-        console.log(response.data);
+        console.log("Sending response: ",response.data);
         res.send(response.data);
     })
     .catch(error => {

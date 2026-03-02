@@ -19,7 +19,7 @@ app.post('/api/topmovies', (req, res) => {
   // Sort valid movies by rating in descending order and get top 5
   const top5Movies = validMovies.sort((a, b) => b.rating - a.rating).slice(0, 5);
 
-  console.log("Top movies: ",top5Movies);
+  console.log("Sending response of Top 5 movies: ",top5Movies);
 
   // Respond with the top 5 movies
   res.json(top5Movies);

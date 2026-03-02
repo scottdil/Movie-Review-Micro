@@ -7,8 +7,9 @@ port = 4500;
 app.get('/genre', function(req, res){
     const {movies, genre} = req.query;
 
-    console.log('Received movies: '+movies);
-    console.log('Received genre: '+genre);
+    
+    console.log('Received genre to filter: '+genre);
+    console.log("Movies received: ", movies);
 
     let genreMovies = []
 
@@ -19,6 +20,7 @@ app.get('/genre', function(req, res){
         }
     }
 
+    console.log("Sending response of filtered movies: ",genreMovies);
     res.json(genreMovies);
 });
 
