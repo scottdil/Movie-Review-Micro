@@ -20,6 +20,7 @@ app.use(express.static('public'))
 
 var db = require('./database/db-connecter')
 var mysql = require('mysql');
+const { Console } = require('console');
 
 app.use(express.static('public/css'));
 
@@ -47,9 +48,11 @@ app.get('/search-movie', function(req, res){
         year: year
     }
 
+    console.log("Sending request to search micro with parameters: ",params);
+
     axios.get('http://localhost:4000/search', { params })
     .then(response => {
-        console.log(response.data);
+        console.log("Response received from search-micro: ", response.data);
         res.send(response.data);
     })
     .catch(error => {
@@ -59,10 +62,6 @@ app.get('/search-movie', function(req, res){
 
 app.post('/add-movie', function(req, res){
     let data = req.body;
-    console.log("made it here: ");
-    console.log("testing: "+data.title);
-    console.log("testing: "+data.runtime);
-    console.log("testing poster: "+data.poster);
 
     let query1 = 'INSERT INTO Movie (title, release_year, director, plot, runtime, genre, poster) VALUES (?, ?, ?, ?, ?, ?, ?)'
     
@@ -81,7 +80,6 @@ app.post('/add-movie', function(req, res){
 app.delete('/delete-movie', function(req, res){
     let data = req.body;
     let movie_ID = parseInt(data.id);
-    console.log("Movie being deleted: "+movie_ID);
     let query1 = `DELETE FROM Movie WHERE movie_ID = ${movie_ID}`
 
     db.pool.query(query1, function(error, rows, fields){
@@ -98,26 +96,10 @@ app.get('/movie_catalog', function(req, res){
     let query1 = `SELECT movie_ID, title as Title, release_year as Year, rating as Rating, genre FROM Movie;`
 
     db.pool.query(query1, function(error, rows, fields){
-        console.log("selected movies: " )
-        rows.forEach(function(row){
-            console.log(row)            
-;        });
         
-        console.log("test before parse ")
         let movies = rows;
-        console.log("parsed movies: "+movies);
-        console.log("test after parse ")
-        let genreList = []
-        for(i=0; i < movies.length; i++){
-            let temp = movies[i].genre.split(", ");
-            for (j=0; j < temp.length; j++){
-                if (!genreList.includes(temp[j])){
-                    genreList.push(temp[j]);
-                }
-            }
-        }            
-
-        console.log("Genre list: "+genreList);
+        let genreList = getGenreList(movies);
+        
         return res.render('movie_catalog', {data: rows, genre : genreList});
    })
 });
@@ -131,10 +113,10 @@ app.get('/genre_filter', function(req, res){
             movies: rows,
             genre: genre
         }
-        
+        console.log("Sending request to genre-micro, with parameters: ", params)
         axios.get('http://localhost:4500/genre', { params })
         .then(response => {
-            console.log(response.data);
+            console.log("Received response from genre-micro: ",response.data);
             let genreList = getGenreList(rows);
             return res.render('movie_genre_filter', {data: response.data, genre : genre, list: genreList});
         })
@@ -151,9 +133,10 @@ app.get('/top_five', function(req, res){
 
     db.pool.query(query1, function(error, rows, fields){    
 
+        console.log("Sending request to MicroserviceA, with parameters: ", rows)
         axios.post(url,  rows)
         .then(response => {
-            console.log('Response:', response.data);
+            console.log('Received response from MicroserviceA:', response.data);
             return res.render('movies_top_five', {data: response.data})
         })
         .catch(error => {
@@ -168,12 +151,11 @@ app.get('/movie_stats', function(req, res){
 
     db.pool.query(query1, function(error, rows, fields){
     
-
+        console.log("Sending request to stats-micro, with parameters: ", rows)
         axios.post(url,  rows)
         .then(response => {
-            console.log('Response:', response.data);
+            console.log('Received response from stats-micro:', response.data);
             let aveRating = Number(response.data[2]);
-            console.log("The ave rating is: ",aveRating);
             return res.render('movies_stats', {data: response.data, ave: aveRating})
         })
         .catch(error => {
@@ -201,7 +183,6 @@ app.get('/movie_details', function(req, res){
 app.put('/delete-review', function(req, res){
     let data = req.body;
     let movie_ID = parseInt(data.id);
-    console.log("Movie being deleted: "+movie_ID);
 
     let query1 = 'UPDATE Movie SET rating = NULL, review = NULL WHERE movie_ID = ?'
 
