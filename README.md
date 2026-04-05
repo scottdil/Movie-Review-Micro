@@ -37,7 +37,7 @@ The application uses a microservices architecture, where each service is respons
 - Communication between services occurs via HTTP requests using Axios
 - The main application acts as an orchestrator, coordinating requests between services.
 
-![Architecture Diagram](./images/architecture-diagram.png)   
+<img src="./images/architecture-diagram.png" alt="Architecture Diagram" width="600"/> 
 
 # Services
 
